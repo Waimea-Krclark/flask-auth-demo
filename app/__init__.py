@@ -91,11 +91,11 @@ def login_user():
 
         if not user:
             flash(f"Unknown user", "error")
-            return redirect("/login")
+            return redirect("/user/login")
 
         if not check_password_hash(user["password_hash"], password):
             flash(f"Incorrect password", "error")
-            return redirect("/login")
+            return redirect("/user/login")
 
         session["logged_in"] = True
         session["user"] = {
@@ -135,7 +135,8 @@ def show_all_creatures():
 #-----------------------------------------------------------
 # Help page - Show some help
 #-----------------------------------------------------------
-@app.get("/help")
+@app.get("/admin")
+@login_required
 def show_help():
 
     flash("Flash test message")

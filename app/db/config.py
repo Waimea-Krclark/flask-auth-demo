@@ -30,11 +30,34 @@ class UserTable:
     """
 
     SEED_DATA = """
-       
+        INSERT INTO messages (forename, surname, username, password_hash)
+        VALUES (0, "The rise of the Squirrel Church", "The Squirrel Church is a new religion that has surfaced after the release of the global hit, Nutdealer, that completely revolutionised how the human race saw everything. It is peak. All praise the Dealer.")
+               (1, "Nut deals at an all time high", "Squirrels dealing acorn has tripled in recent weeks, causing a global ram shortage because of the acorns essential use in ram manufacturing.")
+               
     """
 
 # Add more table classes here...
+class MessageTable:
 
+    NAME = "messages"
+
+    SCHEMA = """
+    CREATE TABLE messages (
+        id                  INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id             INTEGER NOT NULL,
+        title               TEXT NOT NULL,
+        body                TEXT NOT NULL
+
+        FOREIGN KEY(user_id) REFERENCES user(id)
+    )
+    """
+
+    SEED_DATA = """
+        INSERT INTO messages (user_id, title, body)
+        VALUES (0, "The rise of the Squirrel Church", "The Squirrel Church is a new religion that has surfaced after the release of the global hit, Nutdealer, that completely revolutionised how the human race saw everything. It is peak. All praise the Dealer.")
+               (1, "Nut deals at an all time high", "Squirrels dealing acorn has tripled in recent weeks, causing a global ram shortage because of the acorns essential use in ram manufacturing.")
+               
+    """
 
 
 #----------------------------------------------------------------------------
@@ -53,7 +76,7 @@ class UserTable:
 #----------------------------------------------------------------------------
 
 TABLES = [
-    UserTable,
+    UserTable, MessageTable,
     # Add more tables here...
 ]
 
