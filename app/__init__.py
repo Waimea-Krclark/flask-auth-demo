@@ -99,6 +99,7 @@ def login_user():
 
         session["logged_in"] = True
         session["user"] = {
+            "user_id": user["id"],
             "username": username,
             "forename": user["forename"],
             "surname":  user["surname"],
@@ -135,16 +136,19 @@ def show_all_creatures():
 #-----------------------------------------------------------
 # Help page - Show some help
 #-----------------------------------------------------------
-@app.get("/admin")
+@app.get("/messages")
 @login_required
 def show_help():
+    with connect_db() as db:
+        sql = """
+            SELECT messages.title, users.username, messages.body
+            FROM messages
+            INNER JOIN users ON messages.user_id = users.id
+        """
+        params = ()
+        messages = db.execute(sql, params).fetchall()
 
-    flash("Flash test message")
-    flash("Flash test message with a longer bit of text")
-    flash("Success test message", "success")
-    flash("Error test message", "error")
-
-    return render_template("pages/help.jinja")
+        return render_template("pages/messages.jinja", messages=messages)
 
 
 #===========================================================

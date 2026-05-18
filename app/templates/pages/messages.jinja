@@ -1,0 +1,39 @@
+{#=====================================================
+Help page
+=====================================================#}
+
+{% extends 'pages/base.jinja' %}
+
+
+{% block content %}
+
+<h2>Message Board</h2>
+<section id="creatures">
+  <div class="creature">
+    <nav>
+      <p>Welcome, {{ session.user.forename }}</p>
+      <a href="/messages/create">Create Message</a>
+      <a href="/messages">Useless Clutter</a>
+      <a target="_blank" href="https://fasrturnipgames.itch.io/nutdealer-legacy">secret link shhhhhh</a>
+    </nav>
+  </div>
+</section>
+
+<section id="creatures">
+  {% for message in messages %}
+  <div class="creature">
+    <h3>{{ message.title }} - {{ message.username }}</h3>
+    <p>{{ message.body }}</p>
+  </div>
+{% else %}  
+  <h4>No Messages</h4>
+{% endfor %}
+</section>
+
+
+
+
+
+
+
+{% endblock %}
