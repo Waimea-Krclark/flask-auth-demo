@@ -1,0 +1,30 @@
+{#=====================================================
+  Help page
+=====================================================#}
+
+{% extends 'pages/base.jinja' %}
+
+
+{% block content %}
+
+  <h2>Create Message</h2>
+  <form method="post" action="/message">
+    <label>
+        Title
+        <input name="title" type="text" required>
+    </label>
+
+    <label>
+        Content
+        <input name="body" type="text" required>
+    </label>
+
+    <button>Post</button>
+  </form>
+
+  <footer>
+    <p><small>*Remember to read our community guidelines and privacy protection policies before posting to ensure online safety. Posts that do not follow our terms and conditions will be removed, and your account may be suspended/removed, or other legal action will be taken based on the extent of the rule-breaking.</small></p>
+  </footer>
+  
+{% endblock %}
+

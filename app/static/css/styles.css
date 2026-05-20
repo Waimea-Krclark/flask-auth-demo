@@ -4,21 +4,40 @@
 ===========================================================*/
 
 :root {
-    --text-col:         #244;
+    --base-col:         rgb(52, 85, 51);
+    --accent-col:       rgb(46, 196, 133);
 
-    --back-col:         #dff;
-    --back-col-dark:    #bdd;
+    --base-col-light:   color-mix(in srgb, var(--base-col), #fff 50%);
+    --base-col-lighter: color-mix(in srgb, var(--base-col), #fff 20%);
+    --base-col-dark:    color-mix(in srgb, var(--base-col), #000 10%);
+    --base-col-darker:  color-mix(in srgb, var(--base-col), #000 30%);
 
-    --border-col:       #355;
+    --text-col:         #fff;
+    --text-col-inv:     #000;
 
-    --accent-col:       #e43;
+    --page-bg:          var(--base-col-lighter);
+
+    --panel-background: var(--base-col-light);
+    --border-col:       var(--base-col-darker);
+
+    --link-col:         var(--accent-col);
+
+    --button-bg:        var(--accent-col);
+    --button-col:       var(--text-col);
+
+    --padding:          1rem;
+    --padding-sm:       0.5rem;
+
+    --gap:              1rem;
+
+    --content-width:    60rem;
 }
 
 
 /* Overall Layout -----------------------------------------------*/
 
 html {
-    background-color: var(--back-col);
+    background-color: var(--page-bg);
     color: var(--text-col);
 
     font-family: system-ui, sans-serif;
@@ -31,9 +50,14 @@ body {
 
 
 main {
-    max-width: 60rem;
+    max-width: var(--content-width);
     margin-inline: auto;
-    padding: 1rem;
+    padding: var(--padding);
+
+    a {
+        padding: var(--padding-sm);
+        color: var(--accent-col);
+    }
 }
 
 
@@ -43,7 +67,8 @@ body > header {
     display: flex;
     gap: 1rem;
     align-items: center;
-    padding: 1rem;
+    padding: var(--padding);
+    background-color: var(--base-col-dark);
 
     .logo {
         width: 2rem;
@@ -58,6 +83,7 @@ body > header {
     nav {
         display: flex;
         gap: 1rem;
+        
 
         a {
             color: var(--accent-col);
@@ -102,16 +128,39 @@ main > h2 {
     }
 
     .creature {
-        padding: 1rem;
+        padding: var(--padding);
 
-        background-color: var(--back-col-dark);
+        background-color: var(--border-col);
         border: 2px solid var(--border-col);
         border-radius: 0.5rem;
 
         h3 {
             color: var(--accent-col);
         }
+        
     }
 }
 
+form{
+    padding: var(--padding);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--base-col-dark);
+    border: var(--border-col) 5px solid;
+    border-radius: 10px;
+}
+form > label{
+    padding: var(--padding);
+    display: flex;
+    flex-flow: column wrap;
+}
 
+.message_header{
+    display: flex;
+    vertical-align: middle;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}

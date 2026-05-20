@@ -12,7 +12,7 @@ Help page
   <div class="creature">
     <nav>
       <p>Welcome, {{ session.user.forename }}</p>
-      <a href="/messages/create">Create Message</a>
+      <a href="/message/new">Create Message</a>
       <a href="/messages">Useless Clutter</a>
       <a target="_blank" href="https://fasrturnipgames.itch.io/nutdealer-legacy">secret link shhhhhh</a>
     </nav>
@@ -22,7 +22,13 @@ Help page
 <section id="creatures">
   {% for message in messages %}
   <div class="creature">
-    <h3>{{ message.title }} - {{ message.username }}</h3>
+    <div class="message_header">
+      <h3>{{ message.title }} - {{ message.username }}</h3>
+      {% if session.user.user_id == message.user_id %}
+        <a href="/message/edit/{{ message.id }}">Edit</a>
+        <a href="/message/delete/{{ message.id }}">Delete</a>
+      {% endif %}
+    </div>
     <p>{{ message.body }}</p>
   </div>
 {% else %}  

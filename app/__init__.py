@@ -134,14 +134,14 @@ def show_all_creatures():
 
 
 #-----------------------------------------------------------
-# Help page - Show some help
+# Messages page - Show some help
 #-----------------------------------------------------------
 @app.get("/messages")
 @login_required
 def show_help():
     with connect_db() as db:
         sql = """
-            SELECT messages.title, users.username, messages.body
+            SELECT messages.title, users.username, messages.body, messages.user_id, messages.id
             FROM messages
             INNER JOIN users ON messages.user_id = users.id
         """
@@ -150,7 +150,74 @@ def show_help():
 
         return render_template("pages/messages.jinja", messages=messages)
 
+#-----------------------------------------------------------
+# Create Message page - Show some help
+#-----------------------------------------------------------
+@app.get("/message/new")
+@login_required
+def show_message_form():
+    return render_template("pages/message_form.jinja")
 
+#-----------------------------------------------------------
+# Message post Route - Show some help
+#-----------------------------------------------------------
+@app.post("/message")
+def create_message():
+    title = request.form.get('title', '').strip()
+    body = request.form.get('body', '').strip()
+
+    with connect_db() as db:
+        sql = """
+            INSERT INTO messages (user_id, title, body)
+            VALUES (?, ?, ?)
+        """
+        params = (session.get("user")["user_id"], title, body)
+        db.execute(sql, params)
+
+    flash("Posted Message", "success")
+    return redirect("/messages")
+
+#-----------------------------------------------------------
+# Delete messages route - Show some help
+#-----------------------------------------------------------
+@app.get("/message/delete/<int:id>")
+@login_required
+def delete_message(id):
+    with connect_db() as db:
+        sql = """
+            DELETE FROM messages WHERE id = ?
+        """
+        params = (id,)
+        db.execute(sql, params)
+
+    flash("Deleted Message", "success")
+    return redirect("/messages")
+
+@app.get("/message/edit/<int:id>")
+@login_required
+def show_edit_message(id):
+    with connect_db() as db:
+        sql = """
+            SELECT title, body
+            FROM messages WHERE id = ?
+        """
+        params = (id,)
+        message = db.execute(sql, params).fetchone()
+
+    return render_template("pages/edit_message_form.jinja", message = message, id=id)
+
+@app.post("/edit/<int:id>")
+@login_required
+def edit_message(id):
+    title = request.form.get('title', '').strip()
+    body = request.form.get('body', '').strip()
+    with connect_db() as db:
+        sql = """
+            UPDATE messages SET title = ?, body = ? WHERE id = ?
+        """
+        params = (title, body, id)
+        db.execute(sql, params)
+    return redirect("/messages")
 #===========================================================
 # Configure the app
 #===========================================================

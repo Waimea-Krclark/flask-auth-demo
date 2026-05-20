@@ -1,0 +1,30 @@
+{#=====================================================
+  Help page
+=====================================================#}
+
+{% extends 'pages/base.jinja' %}
+
+
+{% block content %}
+
+  <h2>Edit Message</h2>
+  <form method="post" action="/edit/{{id}}">
+    <label>
+        Title
+        <input name="title" type="text" value="{{message.title}}" required>
+    </label>
+
+    <label>
+        Content
+        <input name="body" type="text" value="{{message.body}}"required>
+    </label>
+
+    <button>Update</button>
+  </form>
+  <a href="/messages" type="button">Cancel</a>
+  <footer>
+    <p><small>*Remember to read our community guidelines and privacy protection policies before posting to ensure online safety. Posts that do not follow our terms and conditions will be removed, and your account may be suspended/removed, or other legal action will be taken based on the extent of the rule-breaking.</small></p>
+  </footer>
+  
+{% endblock %}
+
